@@ -22,12 +22,12 @@ s = pd.Series([10, 77, 12, 4, 5])
 # 3     4
 # 4     5
 
-type(s)         # pandas.core.series.Series
-s.index         # RangeIndex(start=0, stop=5, step=1)
-s.dtype         # dtype('int64')
-s.size          # 5
-s.ndim          # 1
-s.values        # array([10, 77, 12,  4,  5], dtype=int64)
+type(s)  # pandas.core.series.Series
+s.index  # RangeIndex(start=0, stop=5, step=1)
+s.dtype  # dtype('int64')
+s.size  # 5
+s.ndim  # 1
+s.values  # array([10, 77, 12,  4,  5], dtype=int64)
 type(s.values)  # numpy.ndarray
 
 s.head(3)
@@ -61,7 +61,7 @@ import seaborn as sns
 # survived: bağımlı değişken, hedef değişkendir. 1:yolcu hayatta kalmış, 0:yolcu hayatta kalamamış
 df = sns.load_dataset("titanic")
 
-df.head()   # shows first five rows of dataframe
+df.head()  # shows first five rows of dataframe
 #    survived  pclass     sex   age  ...  deck  embark_town  alive  alone
 # 0         0       3    male  22.0  ...   NaN  Southampton     no  False
 # 1         1       1  female  38.0  ...     C    Cherbourg    yes  False
@@ -71,7 +71,7 @@ df.head()   # shows first five rows of dataframe
 
 df.tail()  # shows last five rows of dataframe
 
-df.shape   # (row, column) numbers
+df.shape  # (row, column) numbers
 
 df.info()
 # #   Column       Non-Null Count  Dtype
@@ -94,7 +94,7 @@ df.info()
 # dtypes: bool(2), category(2), float64(2), int64(4), object(5)
 
 df.columns
-df.index           # RangeIndex(start=0, stop=891, step=1)  last index: 890
+df.index  # RangeIndex(start=0, stop=891, step=1)  last index: 890
 
 df.describe().T
 #             count       mean        std   min      25%      50%   75%       max
@@ -106,7 +106,7 @@ df.describe().T
 #   fare      891.0  32.204208  49.693429  0.00   7.9104  14.4542  31.0  512.3292
 
 df.isnull().values.any()  # Veri setinde eksik değer varsa True döner
-df.isnull().sum()         # Her bir değişkendeki(sütunda) eksik değer sayısını verir
+df.isnull().sum()  # Her bir değişkendeki(sütunda) eksik değer sayısını verir
 df["sex"].head()
 
 df["sex"].value_counts()  # değişkendeki değerleri gruplayıp kaçar tane olduğunu verir
@@ -119,6 +119,7 @@ df["sex"].value_counts()  # değişkendeki değerleri gruplayıp kaçar tane old
 #############################################
 import pandas as pd
 import seaborn as sns
+
 df = sns.load_dataset("titanic")
 df.head()
 
@@ -141,7 +142,7 @@ df[0:13]  # 0. satırdan 13. satıra kadar df'yi göster
 # 12         0       3    male  20.0  ...   NaN  Southampton     no   True
 # [13 rows x 15 columns]
 
-df.drop(0, axis=0).head()           # 0. satırı sil
+df.drop(0, axis=0).head()  # 0. satırı sil
 df.drop("survived", axis=1).head()  # "survived" sütununu sil
 
 # seçili indexlere göre satıları siler
@@ -158,7 +159,7 @@ df.drop(delete_indexes, axis=0).head(10)
 #######################
 
 df["age"].head()  # variable selection
-df.age.head()     # variable selection
+df.age.head()  # variable selection
 
 df.index = df["age"]
 
@@ -196,13 +197,13 @@ pd.set_option('display.max_columns', None)
 df = sns.load_dataset("titanic")
 df.head()
 
-"age" in df   # değişken df'de var mı ?
+"age" in df  # değişken df'de var mı ?
 
 df["age"].head()
 df.age.head()
 
 df["age"].head()
-type(df["age"].head())    # pandas.core.series.Series
+type(df["age"].head())  # pandas.core.series.Series
 
 # DIKKAT! Tek bir değişken seçerken seçimin sonucunun df olarak kalması için [[]] kullanılmalı
 df[["age"]].head()
@@ -215,7 +216,7 @@ col_names = ["age", "adult_male", "alive"]
 df[col_names]
 
 # df'ye yeni bir değişken ekleme
-df["age2"] = df["age"]**2
+df["age2"] = df["age"] ** 2
 df["age3"] = df["age"] / df["age2"]
 
 # df'den değişken silme
@@ -229,7 +230,6 @@ df.drop(col_names, axis=1).head()
 # ~: column isimleri içerisinde "age"'i barındırmayan columnları getir.
 df.loc[:, ~df.columns.str.contains("age")].head()
 
-
 #######################
 # iloc & loc
 #######################
@@ -237,196 +237,53 @@ df.loc[:, ~df.columns.str.contains("age")].head()
 
 import pandas as pd
 import seaborn as sns
+
 pd.set_option('display.max_columns', None)
 df = sns.load_dataset("titanic")
 df.head()
 
 # iloc: integer based selection, index bilgisiyle seçim yapar
-df.iloc[0:3]        # df'i 0. satırdan 3. satıra kadar getir
-df.iloc[0, 0]       # df'nin 0. satır 0. sütundaki elemanını getir
+df.iloc[0:3]  # df'i 0. satırdan 3. satıra kadar getir
+df.iloc[0, 0]  # df'nin 0. satır 0. sütundaki elemanını getir
 
 # loc: label based selection, indexlerdeki label'lara göre seçim yapar
-df.loc[0:3]         # df'yi 0. satırdan 3. satır dahil getirir
+df.loc[0:3]  # df'yi 0. satırdan 3. satır dahil getirir
 
-df.iloc[0:3, 0:3]   # df'yi 0. satırdan 3. satıra kadar, 0. sütundan 3. sütuna kadar getirir
+df.iloc[0:3, 0:3]  # df'yi 0. satırdan 3. satıra kadar, 0. sütundan 3. sütuna kadar getirir
 df.loc[0:3, "age"]  # df'yi 0. satırdan 3. satır dahil, age sütunuyla getir
 
-# DIKKAT! loc'u fancy index ile kullanmak
+# loc'u fancy index ile kullanmak
 # df'den birden fazla değişkeni ismiyle seçmek
 col_names = ["age", "embarked", "alive"]
 df.loc[0:3, col_names]
-
 
 #######################
 # Koşullu Seçim (Conditional Selection)
 #######################
 import pandas as pd
 import seaborn as sns
+
 pd.set_option('display.max_columns', None)
 df = sns.load_dataset("titanic")
 df.head()
 
 df[df["age"] > 50].head()
+# yaşı 50 den büyük olan kişi sayısı
 df[df["age"] > 50]["age"].count()
 
+# yaşı 50 den büyük olan kişileri sınıfıyla getir
 df.loc[df["age"] > 50, ["age", "class"]].head()
 
+# DIKKAT! Birden fazla koşul giriliyorsa bu durumda koşullar parantez içine alınmalıdır.
+# yaşı 50 den büyük ve cinsiyeti erkek olan (df["age"] > 50) & (df["sex"] == "male")
 df.loc[(df["age"] > 50) & (df["sex"] == "male"), ["age", "class"]].head()
 
+# embark_town: gemiye binilen lokasyon
 df["embark_town"].value_counts()
 
+# df'yi üç farklı koşula göre ve koşul sütunlarıyla birlikte getirme
 df_new = df.loc[(df["age"] > 50) & (df["sex"] == "male")
-       & ((df["embark_town"] == "Cherbourg") | (df["embark_town"] == "Southampton")),
-       ["age", "class", "embark_town"]]
+                & ((df["embark_town"] == "Cherbourg") | (df["embark_town"] == "Southampton")),
+                ["age", "class", "embark_town"]]
 
 df_new["embark_town"].value_counts()
-
-#############################################
-# Toplulaştırma ve Gruplama (Aggregation & Grouping)
-#############################################
-
-# - count()
-# - first()
-# - last()
-# - mean()
-# - median()
-# - min()
-# - max()
-# - std()
-# - var()
-# - sum()
-# - pivot table
-
-import pandas as pd
-import seaborn as sns
-pd.set_option('display.max_columns', None)
-df = sns.load_dataset("titanic")
-df.head()
-
-df["age"].mean()
-
-df.groupby("sex")["age"].mean()
-
-df.groupby("sex").agg({"age": "mean"})
-df.groupby("sex").agg({"age": ["mean", "sum"]})
-
-df.groupby("sex").agg({"age": ["mean", "sum"],
-                       "survived": "mean"})
-
-
-df.groupby(["sex", "embark_town"]).agg({"age": ["mean"],
-                       "survived": "mean"})
-
-df.groupby(["sex", "embark_town", "class"]).agg({"age": ["mean"],
-                       "survived": "mean"})
-
-
-df.groupby(["sex", "embark_town", "class"]).agg({
-    "age": ["mean"],
-    "survived": "mean",
-    "sex": "count"})
-
-
-#######################
-# Pivot table
-#######################
-import pandas as pd
-import seaborn as sns
-pd.set_option('display.max_columns', None)
-df = sns.load_dataset("titanic")
-df.head()
-
-df.pivot_table("survived", "sex", "embarked")
-
-df.pivot_table("survived", "sex", ["embarked", "class"])
-
-df.head()
-
-df["new_age"] = pd.cut(df["age"], [0, 10, 18, 25, 40, 90])
-
-df.pivot_table("survived", "sex", ["new_age", "class"])
-
-pd.set_option('display.width', 500)
-
-
-#############################################
-# Apply ve Lambda
-#############################################
-import pandas as pd
-import seaborn as sns
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', 500)
-df = sns.load_dataset("titanic")
-df.head()
-
-df["age2"] = df["age"]*2
-df["age3"] = df["age"]*5
-
-(df["age"]/10).head()
-(df["age2"]/10).head()
-(df["age3"]/10).head()
-
-for col in df.columns:
-    if "age" in col:
-        print(col)
-
-for col in df.columns:
-    if "age" in col:
-        print((df[col]/10).head())
-
-for col in df.columns:
-    if "age" in col:
-        df[col] = df[col]/10
-
-df.head()
-
-df[["age", "age2", "age3"]].apply(lambda x: x/10).head()
-
-df.loc[:, df.columns.str.contains("age")].apply(lambda x: x/10).head()
-
-df.loc[:, df.columns.str.contains("age")].apply(lambda x: (x - x.mean()) / x.std()).head()
-
-def standart_scaler(col_name):
-    return (col_name - col_name.mean()) / col_name.std()
-
-df.loc[:, df.columns.str.contains("age")].apply(standart_scaler).head()
-
-# df.loc[:, ["age","age2","age3"]] = df.loc[:, df.columns.str.contains("age")].apply(standart_scaler)
-
-df.loc[:, df.columns.str.contains("age")] = df.loc[:, df.columns.str.contains("age")].apply(standart_scaler)
-
-df.head()
-
-#############################################
-# Birleştirme (Join) İşlemleri
-#############################################
-import numpy_array as np
-import pandas as pd
-m = np.random.randint(1, 30, size=(5, 3))
-df1 = pd.DataFrame(m, columns=["var1", "var2", "var3"])
-df2 = df1 + 99
-
-pd.concat([df1, df2])
-
-pd.concat([df1, df2], ignore_index=True)
-
-#######################
-# Merge ile Birleştirme İşlemleri
-#######################
-
-df1 = pd.DataFrame({'employees': ['john', 'dennis', 'mark', 'maria'],
-                    'group': ['accounting', 'engineering', 'engineering', 'hr']})
-
-df2 = pd.DataFrame({'employees': ['mark', 'john', 'dennis', 'maria'],
-                    'start_date': [2010, 2009, 2014, 2019]})
-
-pd.merge(df1, df2)
-pd.merge(df1, df2, on="employees")
-
-# Amaç: Her çalışanın müdürünün bilgisine erişmek istiyoruz.
-df3 = pd.merge(df1, df2)
-
-df4 = pd.DataFrame({'group': ['accounting', 'engineering', 'hr'],
-                    'manager': ['Caner', 'Mustafa', 'Berkcan']})
-
-pd.merge(df3, df4)
