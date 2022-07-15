@@ -1,8 +1,8 @@
-###########################
-# 3. ÖDEV
-###########################
+#########################################
+# Python Execises
+#########################################
 
-# TODO -1: veri tiplerini sorgulayın, type() kullanın
+# GOREV -1: veri tiplerini sorgulayın, type() kullanın
 
 x = 8
 y = 3.2
@@ -29,7 +29,7 @@ print(type(d))  # dict
 print(type(t))  # tuple
 print(type(s))  # set
 
-# TODO -2: Verilen string ifadenin tüm harflerini büyük harfe çeviriniz.
+# GOREV -2: Verilen string ifadenin tüm harflerini büyük harfe çeviriniz.
 #  Virgül ve nokta yerine space koyunuz, kelime kelime ayırınız.
 
 text = "The goal is to turn data information, and information into insight."
@@ -40,7 +40,7 @@ print(text.replace(",", " ").replace(".", " ").upper().split())
 # ['THE', 'GOAL', 'IS', 'TO', 'TURN', 'DATA', 'INFORMATION', 'AND', 'INFORMATION', 'INTO', 'INSIGHT']
 
 
-# TODO -3: Verilen listeye aşağıdaki adımları uygulayınız.
+# GOREV -3: Verilen listeye aşağıdaki adımları uygulayınız.
 
 lst = ["D", "A", "T", "A", "S", "C", "I", "E", "N", "C", "E"]
 """
@@ -66,7 +66,7 @@ lst.append("+")
 lst.insert(8, "N")
 print(lst)  # ['D', 'A', 'T', 'A', 'S', 'C', 'I', 'E', 'N', 'C', 'E', '+']
 
-# TODO -4: Verilen sözlük yapısına aşağıdaki adımları uygulayınız.
+# GOREV -4: Verilen sözlük yapısına aşağıdaki adımları uygulayınız.
 
 dict = {'Christian': ["America", 18],
         'Daisy': ["England", 12],
@@ -101,7 +101,7 @@ print(dict)
 # 'Ahmet': ['Turkey', 24]}
 
 
-# TODO -5: Argüman olarak birliste alan, listenin içerisindeki tek ve çift sayıları ayrı listelere atayan ve
+# GOREV -5: Argüman olarak birliste alan, listenin içerisindeki tek ve çift sayıları ayrı listelere atayan ve
 #  bu listeleri return eden fonksiyon yazınız.
 
 l = [2, 13, 18, 93, 22]
@@ -124,7 +124,7 @@ def func(my_list):
 
 even_list, odd_list = func([])  # even_list = [2, 4], odd_list = [1, 3]
 
-# TODO -6: List Comprehension yapısı kullanarak
+# GOREV -6: List Comprehension yapısı kullanarak
 #  car_crashes verisindeki numeric değişkenlerin isimlerini büyük harfe çeviriniz ve başına NUM ekleyiniz.
 #  ipucu: Numeric olmayan değişkenlerin de isimleri büyümeli.Tek bir list comprehension yapısı kullanılmalı.
 
@@ -146,7 +146,7 @@ print(df)
 #  'ABBREV']
 
 
-# TODO -7: List Comprehension yapısı kullanarak
+# GOREV -7: List Comprehension yapısı kullanarak
 #  car_crashes verisinde isminde "no" barındırmayan değişkenlerin isimlerinin sonuna"FLAG" yazınız.
 #  ipucu: Tüm değişkenlerin isimleri büyük harf olmalı.Tek bir list comprehension yapısı ile yapılmalı.
 
@@ -163,7 +163,7 @@ print(df)
 #  'ABBREV_FLAG']
 
 
-# TODO -8: List Comprehension yapısık ullanarak
+# GOREV -8: List Comprehension yapısık ullanarak
 #  aşağıda verilen değişken isimlerinden FARKLI olan değişkenlerin isimlerini seçiniz ve yeni bir data frame oluşturunuz.
 #  ipucu: Önce verilen listeye göre list comprehension kullanarak new_cols adında yeni liste oluşturunuz.
 #  Sonra df[new_cols] ile bu değişkenleri seçerek yeni bir df oluşturunuz ve adını new_df olarak isimlendiriniz.

@@ -1,6 +1,6 @@
-#####################
-# 2. ÖDEV
-#####################
+##########################################
+# Virtual Environment Oluşturma
+##########################################
 
 
 # Görev 1:Kendi isminizde bir virtual environment oluşturunuz, oluşturma esnasında python 3 kurulumu yapınız.
@@ -25,3 +25,4 @@
 # Cevap 8: conda install seaborn matplotlib
 # Cevap 9: conda env export > environment.yaml
 # Cevap 10: conda env remove -n myenv
+

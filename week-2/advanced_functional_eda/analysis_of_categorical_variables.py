@@ -18,9 +18,10 @@ pd.set_option('display.width', 500)
 df = sns.load_dataset("titanic")
 df.head()
 
-df["sex"].dtypes
-print(df["sex"].dtypes)
-str(df["sex"].dtypes)
+# değişkenin tipi
+df["sex"].dtype
+print(df["sex"].dtype)
+str(df["sex"].dtype)
 
 df["sex"].value_counts()  # değişkenin sınıfları ve sayıları
 df["sex"].unique()        # değişkenin unique değerleri

@@ -2,8 +2,13 @@
 # 4. Hedef Değişken Analizi (Analysis of Target Variable)
 #############################################
 
+# survived değişkeni: tianic veri seti için hedef değişkendir. (bağımlı değişken, target değişken)
+
 import pandas as pd
 import seaborn as sns
+import matplotlib
+matplotlib.use('Qt5Agg')
+import matplotlib.pyplot as plt
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 500)
@@ -83,6 +88,7 @@ df.head()
 df["survived"].value_counts()
 cat_summary(df, "survived")
 
+
 #######################
 # Hedef Değişkenin Kategorik Değişkenler ile Analizi
 #######################
@@ -91,25 +97,33 @@ cat_summary(df, "survived")
 df.groupby("sex")["survived"].mean()
 
 
+# hedef değişkeni kategroik değişkene göre analiz eden func.
+# df'yi kategorik değişkene göre grupla, target'ın ortalamasını al
 def target_summary_with_cat(dataframe, target, categorical_col):
     print(pd.DataFrame({"TARGET_MEAN": dataframe.groupby(categorical_col)[target].mean()}), end="\n\n\n")
 
 
+# yolculuk sınıfına göre hayatta kalma oranları
 target_summary_with_cat(df, "survived", "pclass")
 
+# hedef değişkenin özet istatistiği
+# bütün kategorik değişenlerin hayatta kalma oranları
 for col in cat_cols:
     target_summary_with_cat(df, "survived", col)
+
 
 #######################
 # Hedef Değişkenin Sayısal Değişkenler ile Analizi
 #######################
 
 
+# DIKKAT! bu sefer önce hedef değişken gruplanır, sonra nümerik değişkenin ortalaması alınır
 df.groupby("survived")["age"].mean()
 
 df.groupby("survived").agg({"age": "mean"})
 
 
+# hedef değişkeni nümerik değişkene göre analiz eden func.
 def target_summary_with_num(dataframe, target, numerical_col):
     print(dataframe.groupby(target).agg({numerical_col: "mean"}), end="\n\n\n")
 
