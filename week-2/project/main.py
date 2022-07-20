@@ -35,7 +35,10 @@ AGE     – Müşterinin yaşı
 # Proje Görevleri
 #############################################
 
+#############################################
 # Görev 1: Aşağıdaki Soruları Yanıtlayınız
+#############################################
+
 # Soru 1: persona.csv dosyasını okutunuz ve veri seti ile ilgili genel bilgileri gösteriniz.
 import pandas as pd
 
@@ -45,7 +48,8 @@ df.info()
 df.isnull().values.any()
 
 #  Soru 2: Kaç unique SOURCE vardır? Frekansları nedir?
-df.nunique()
+df["SOURCE"].nunique()
+df["SOURCE"].value_counts()
 
 # Soru 3: Kaç unique PRICE vardır
 df["PRICE"].nunique()
@@ -56,93 +60,126 @@ df["PRICE"].value_counts()
 # Soru 5: Hangi ülkeden kaçar tane satış olmuş?
 df["COUNTRY"].value_counts()
 
+
 # Soru 6: Ülkelere göre satışlardan toplam ne kadar kazanılmış?
-df.pivot_table("PRICE", "COUNTRY", aggfunc="sum")
-df.groupby("COUNTRY")["PRICE"].sum()  # 2. yol
+
+# 1. yol pivot table
+df.pivot_table(values="PRICE", index="COUNTRY", aggfunc="sum")
+
+# 2. yol group by
+df.groupby("COUNTRY")["PRICE"].sum()
+df.groupby("COUNTRY").agg({"PRICE": "sum"})
 
 # Soru 7: SOURCE türlerine göre satış sayıları nedir?
+df["SOURCE"].value_counts()
 df.pivot_table("PRICE", "SOURCE", aggfunc="count")
-df.groupby("SOURCE")["PRICE"].count()  # 2. yol
-df["SOURCE"].value_counts()  # 3. yol
+df.groupby("SOURCE")["PRICE"].count()
 
 # Soru 8: Ülkelere göre PRICE ortalamaları nedir?
 df.pivot_table("PRICE", "COUNTRY")
-df.groupby("COUNTRY")["PRICE"].mean()  # 2. yol
+df.groupby(by=['COUNTRY']).agg({"PRICE": "mean"})
 
 # Soru 9: SOURCE'lara göre PRICE ortalamaları nedir?
 df.pivot_table("PRICE", "SOURCE")
-df.groupby("SOURCE")["PRICE"].mean()  # 2. yol
+df.groupby(by=['SOURCE']).agg({"PRICE": "mean"})
 
 # Soru 10: COUNTRY-SOURCE kırılımında PRICE ortalamaları nedir?
 df.pivot_table("PRICE", ["COUNTRY", "SOURCE"])
-df.groupby(["COUNTRY", "SOURCE"])["PRICE"].mean()  # 2. yol
+df.groupby(by=["COUNTRY", 'SOURCE']).agg({"PRICE": "mean"})
 
+
+#############################################
 # Görev 2: COUNTRY, SOURCE, SEX, AGE kırılımında ortalama kazançlar nedir?
+#############################################
 df.pivot_table("PRICE", ["COUNTRY", "SOURCE", "SEX", "AGE"])
-df.groupby(["COUNTRY", "SOURCE", "SEX", "AGE"])["PRICE"].mean()  # 2. yol
+df.groupby(["COUNTRY", 'SOURCE', "SEX", "AGE"]).agg({"PRICE": "mean"})
+df.groupby(["COUNTRY", "SOURCE", "SEX", "AGE"])["PRICE"].mean()
 
+
+#############################################
 # Görev 3: Çıktıyı PRICE’a göre sıralayınız.
+#############################################
+
 # Önceki sorudaki çıktıyı daha iyi görebilmek için sort_values metodunu azalan olacak şekilde PRICE’a göre uygulayınız.
 # Çıktıyı agg_df olarak kaydediniz.
+
+# 1. yol pivot table
 agg_df = df.pivot_table("PRICE", ["COUNTRY", "SOURCE", "SEX", "AGE"]).sort_values("PRICE", ascending=False)
 
-# 2. yol
-agg_df = df.groupby(["COUNTRY", "SOURCE", "SEX", "AGE"]).agg({"PRICE": "mean"})
+# 2. yol group by
+agg_df = df.groupby(["COUNTRY", "SOURCE", "SEX", "AGE"]).agg({"PRICE": "mean"}).sort_values("PRICE", ascending=False)
 # Not: df.groupby(["COUNTRY", "SOURCE", "SEX", "AGE"])["PRICE"].mean() olarak kurgularsanız,
 # çıktınız pandas.core.series.Series tipinde olacağından "sort_values" yapamazsınız.
-agg_df = agg_df.sort_values("PRICE", ascending=False)
 
+
+#############################################
 # Görev 4: Indekste yer alan isimleri değişken ismine çeviriniz.
+#############################################
+
 # Görev 3'ün çıktısında yer alan PRICE dışındaki tüm değişkenler index isimleridir.
 # Bu isimleri değişken isimlerine çeviriniz.
+
 agg_df = agg_df.reset_index()
 
+
+#############################################
 # Görev 5: Age değişkenini kategorik değişkene çeviriniz ve agg_df’e ekleyiniz.
+#############################################
+
 # Aralıkları ikna edici şekilde oluşturunuz.
 # Örneğin: ‘0_18', ‘19_23', '24_30', '31_40', '41_70'
-agg_df.info()
+
 agg_df["AGE"].max()
 
+# AGE değişkeninin nerelerden bölüneceğini belirtelim:
+bins = [0, 18, 23, 30, 40, agg_df["AGE"].max()]
 
-def age_to_cat(x):
-    if 0 <= x <= 18:
-        return "0_18"
-    elif 19 <= x <= 23:
-        return "19_23"
-    elif 24 <= x <= 30:
-        return "24_30"
-    elif 31 <= x <= 40:
-        return "31_40"
-    elif 41 <= x <= 70:
-        return "41_70"
-    else:
-        return "out_of_range"
+# Bölünen noktalara karşılık isimlendirmelerin ne olacağını ifade edelim:
+mylabels = ['0_18', '19_23', '24_30', '31_40', '41_' + str(agg_df["AGE"].max())]
+
+# age'i bölelim:
+agg_df["age_cat"] = pd.cut(agg_df["AGE"], bins, labels=mylabels)
+agg_df.head()
 
 
-agg_df["AGE_CAT"] = agg_df["AGE"].apply(lambda x: age_to_cat(x))
-
-
+#############################################
 # Görev 6: Yeni seviye tabanlı müşterileri (persona) tanımlayınız ve veri setine değişken olarak ekleyiniz.
+#############################################
+
 # Yeni eklenecek değişkenin adı: customers_level_based
 # Önceki soruda elde edeceğiniz çıktıdaki gözlemleri bir araya getirerek customers_level_based değişkenini oluşturun.
-
-# TODO: pivot table ile dene
-
-# 2. yol
-# Not: Dikkat! Listcomprehensionile customers_level_baseddeğerleri oluşturulduktan sonra bu değerlerin
+# Dikkat!
+# Listcomprehensionile customers_level_based değerleri oluşturulduktan sonra bu değerlerin
 # tekilleştirilmesi gerekmektedir. Örneğin birden fazla şu ifadeden olabilir: USA_ANDROID_MALE_0_18.
-# Bunları groupby'a alıp price ortalamalarını almak gerekmektedir
+# Bunları groupby'a alıp price ortalamalarını almak gerekmektedir.
+
+# değişken isimleri:
+agg_df.columns
+
+# gözlem değerleri:
+agg_df.values
+
 agg_df["customers_level_based"] = [country.upper() + "_" + source.upper() + "_" +
         sex.upper() + "_" + age_cat.upper() for country, source, sex, age_cat
-        in zip(agg_df["COUNTRY"], agg_df["SOURCE"], agg_df["SEX"], agg_df["AGE_CAT"])]
+        in zip(agg_df["COUNTRY"], agg_df["SOURCE"], agg_df["SEX"], agg_df["age_cat"])]
+
+agg_df["customers_level_based"].nunique()  # 109
+agg_df["customers_level_based"].count()    # 348
 
 agg_df = agg_df.groupby(["customers_level_based"]).agg({"PRICE": "mean"})
 agg_df = agg_df.reset_index()
 
+
+#############################################
 # Görev 7: Yeni müşterileri (personaları) segmentlere ayırınız.
+#############################################
+
 # Yeni müşterileri (Örnek: USA_ANDROID_MALE_0_18) PRICE’a göre 4 segmente ayırınız.
 # Segmentleri SEGMENT isimlendirmesi ile değişken olarak agg_df’e ekleyiniz.
 # Segmentleri betimleyiniz (Segmentlere göre group by yapıp price mean, max, sum’larını alınız).
+
+# qcut: price değerlerini küçükten büyüğe sıralayıp quantile lara göre parçalar.
+# A segmentindeki müşteriler, en çok alış-veriş yapanlar
 agg_df["SEGMENT"] = pd.qcut(agg_df["PRICE"], q=4, labels=["D", "C", "B", "A"])
 
 
@@ -156,7 +193,9 @@ def analysis_segments(df):
 analysis_segments(agg_df)
 
 
+#############################################
 # Görev 8: Yeni gelen müşterileri sınıflandırıp, ne kadar gelir getirebileceklerini  tahmin ediniz.
+#############################################
 
 
 def guess_income(user_segment): return list(agg_df[agg_df["customers_level_based"] == user_segment]["SEGMENT"]),\
@@ -164,10 +203,19 @@ def guess_income(user_segment): return list(agg_df[agg_df["customers_level_based
 
 
 # 33 yaşında ANDROID kullanan bir Türk kadını hangi segmente aittir ve ortalama ne kadar gelir kazandırması beklenir?
+
+# 1. yol
+user = "TUR_ANDROID_FEMALE_31_40"
+agg_df[agg_df["customers_level_based"] == user]
+
+# 2. yol
 user_1 = "TUR_ANDROID_FEMALE_31_40"
 guess_income(user_1)
 
+
 # 35 yaşında IOS kullanan bir Fransız kadını hangi segmente aittir ve ortalama ne kadar gelir kazandırması beklenir?
-user_2 = "FRA_IOS_FEMALE_31_40"
-guess_income(user_2)
+
+user = "FRA_IOS_FEMALE_31_40"
+agg_df[agg_df["customers_level_based"] == user]
+
 
