@@ -36,7 +36,7 @@ df.isnull().values.any()  # Are there any missing values in the dataset ?
 df.isnull().sum()  # How many missing variables in the data set ?
 
 
-# tek satırlık kod ile farklı veri setlerini özetleyen fonksiyon
+# veri setlerini özetleyen, hayat kurtaran fonksiyon
 def check_df(dataframe, head=5):
     print("##################### Shape #####################")
     print(dataframe.shape)

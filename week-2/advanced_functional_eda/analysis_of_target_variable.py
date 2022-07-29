@@ -97,7 +97,7 @@ cat_summary(df, "survived")
 df.groupby("sex")["survived"].mean()
 
 
-# hedef değişkeni kategroik değişkene göre analiz eden func.
+# hedef değişkeni kategorik değişkene göre analiz eden, hayat kurtaran fonksiyon
 # df'yi kategorik değişkene göre grupla, target'ın ortalamasını al
 def target_summary_with_cat(dataframe, target, categorical_col):
     print(pd.DataFrame({"TARGET_MEAN": dataframe.groupby(categorical_col)[target].mean()}), end="\n\n\n")
@@ -123,7 +123,7 @@ df.groupby("survived")["age"].mean()
 df.groupby("survived").agg({"age": "mean"})
 
 
-# hedef değişkeni nümerik değişkene göre analiz eden func.
+# hedef değişkeni nümerik değişkene göre analiz eden, hayat kurtaran fonksiyon
 def target_summary_with_num(dataframe, target, numerical_col):
     print(dataframe.groupby(target).agg({numerical_col: "mean"}), end="\n\n\n")
 

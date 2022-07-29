@@ -22,29 +22,30 @@ df.info()
 
 
 # docstring
-
+# hayat kurtaran fonksiyon
 # Değişkenin eşsiz değer sayısı 10'dan küçükse kategorik, 20'den büyükse cardinal değişken kabul et
 def grab_col_names(dataframe, cat_th=10, car_th=20):
     """
     Veri setindeki kategorik, numerik ve kategorik fakat kardinal değişkenlerin isimlerini verir.
+    Not: Kategorik değişkenlerin içerisine numerik görünümlü kategorik değişkenler de dahildir.
 
     Parameters
     ----------
     dataframe: dataframe
-        değişken isimleri alınmak istenen dataframe'dir.
+            Değişken isimleri alınmak istenen dataframe'dir.
     cat_th: int, float
-        numerik fakat kategorik olan değişkenler için sınıf eşik değeri
+            numerik fakat kategorik olan değişkenler için sınıf eşik değeri
     car_th: int, float
-        kategorik fakat kardinal değişkenler için sınıf eşik değeri
+            kategorik fakat kardinal değişkenler için sınıf eşik değeri
 
     Returns
     -------
     cat_cols: list
-        Kategorik değişken listesi
+            Kategorik değişken listesi
     num_cols: list
-        Numerik değişken listesi
+            Numerik değişken listesi
     cat_but_car: list
-        Kategorik görünümlü kardinal değişken listesi
+            Kategorik görünümlü kardinal değişken listesi
 
     Notes
     ------
@@ -138,7 +139,6 @@ for col in cat_cols:
     cat_summary(df, col, plot=True)
 
 
-# bunu çalıştırmadan önce num_summary func. çalıştırmayı unutma :)
 for col in num_cols:
     num_summary(df, col, plot=True)
 
